@@ -32,3 +32,4 @@ user_creator_id VARCHAR(255) NOT NULL,
 FOREIGN KEY (user_creator_id) REFERENCES labook_user(id)
 );
 ```
+teste
