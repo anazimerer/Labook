@@ -1,4 +1,6 @@
 import BaseDatabase from "./BaseDatabase";
+import {User} from "../model/User";
+
 
 export default class UserDataBase extends BaseDatabase {
   private static TABLE_NAME = "labook_user";
@@ -20,12 +22,12 @@ export default class UserDataBase extends BaseDatabase {
     await BaseDatabase.destroyConnection();
   }
 
-  public async getUserByEmail(email: string): Promise<any> {
+  public async getUserByEmail(email: string): Promise<User> {
     const result = await this.getConnection()
       .select()
       .from(UserDataBase.TABLE_NAME)
       .where({ email });
     await BaseDatabase.destroyConnection();
-    return result[0];
+    return User.toUserModel(result[0]);
   }
 }
