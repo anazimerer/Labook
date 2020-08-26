@@ -27,7 +27,10 @@ export default class UserBusiness {
     const user = await userDatabase.getUserByEmail(email);
 
     const hashManager = new HashManager();
-    const isPasswordCorrect = hashManager.compare(password, user.password);
+    const isPasswordCorrect = await hashManager.compare(
+      password,
+      user.password
+    );
 
     if (!isPasswordCorrect) {
       throw new Error("Senha ou usuário inválida");

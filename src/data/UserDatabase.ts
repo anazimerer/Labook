@@ -1,7 +1,7 @@
 import BaseDatabase from "./BaseDatabase";
 
 export default class UserDataBase extends BaseDatabase {
-  private static TABLE_NAME: "labook_user";
+  private static TABLE_NAME = "labook_user";
 
   public async createUser(
     id: string,
@@ -9,7 +9,6 @@ export default class UserDataBase extends BaseDatabase {
     email: string,
     password: string
   ): Promise<void> {
-    console.log(id, name, email, password + "testeeeeeeeee");
     await this.getConnection()
       .insert({
         id,
@@ -27,6 +26,6 @@ export default class UserDataBase extends BaseDatabase {
       .from(UserDataBase.TABLE_NAME)
       .where({ email });
     await BaseDatabase.destroyConnection();
-    return result;
+    return result[0];
   }
 }
