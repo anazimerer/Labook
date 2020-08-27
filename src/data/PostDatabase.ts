@@ -1,5 +1,7 @@
 import BaseDatabase from "./BaseDatabase";
-
+import { PostAndUserNameOutputDTO } from "../model/Post";
+import moment from "moment";
+moment.locale("PT-BR");
 export default class PostsDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_post";
 
@@ -25,6 +27,20 @@ export default class PostsDatabase extends BaseDatabase {
       ${postType ? `AND p.type = '${postType}'` : ""}
       ORDER BY p.creation_date DESC
     `);
-    return response[0];
+
+    const posts: PostAndUserNameOutputDTO[] = response[0].map((item: any) => {
+      const post: PostAndUserNameOutputDTO = {
+        postId: item.post_id,
+        urlPhoto: item.utl_photo,
+        description: item.description,
+        creationDate: moment(item.creation_date).format("DD/MM/YYYY HH:mm"),
+        type: item.type,
+        userId: item.user_creator_id,
+        userName: item.user_creator_name,
+      };
+      return post;
+    });
+
+    return posts;
   }
 }
