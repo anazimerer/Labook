@@ -8,6 +8,7 @@ export default class PostsDatabase extends BaseDatabase {
 
   public async getFeedByUserId(
     userId: string,
+    page: number,
     type?: string
   ): Promise<PostAndUserNameOutputDTO[]> {
     const postType =
@@ -30,6 +31,8 @@ export default class PostsDatabase extends BaseDatabase {
           f.user_id = '${userId}'
       ${postType ? `AND p.type = '${postType}'` : ""}
       ORDER BY p.creation_date DESC
+      LIMIT ${PostsDatabase.LIMIT}
+      OFFSET ${PostsDatabase.LIMIT * (page - 1) || 0}
     `);
 
     await BaseDatabase.destroyConnection();
