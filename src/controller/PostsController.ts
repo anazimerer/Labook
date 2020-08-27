@@ -6,7 +6,8 @@ export default class PostsController {
     const postsBusiness: PostsBusiness = new PostsBusiness();
     try {
       const response = await postsBusiness.getFeed(
-        req.headers.authorization as string
+        req.headers.authorization as string,
+        req.query.type as string
       );
 
       res.status(200).send({ posts: response });

@@ -3,4 +3,4 @@ import PostsController from "../controller/PostsController";
 
 export const postsRouter = express.Router();
 
-postsRouter.put("/feed", new PostsController().getFeed);
+postsRouter.get("/feed", new PostsController().getFeed);

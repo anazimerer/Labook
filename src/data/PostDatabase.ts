@@ -4,6 +4,10 @@ export default class PostsDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_post";
 
   public async getFeed(userId: string, type?: string): Promise<any[]> {
+    const postType =
+      type?.toUpperCase() === "NORMAL" || type?.toUpperCase() === "EVENT"
+        ? type
+        : undefined;
     const response = await this.getConnection().raw(`
       SELECT
           p.post_id,
@@ -14,11 +18,11 @@ export default class PostsDatabase extends BaseDatabase {
           p.user_creator_id,
           u.name AS user_creator_name
       FROM 
-          labook_post p JOIN labook_user u ON p.user_id = u.id
+          labook_post p JOIN labook_user u ON p.user_creator_id = u.id
           JOIN labook_user_relationship f ON f.friend_id = u.id
       WHERE
           f.user_id = '${userId}'
-      ${type ? `AND p.type = '${type}'` : ""}
+      ${postType ? `AND p.type = '${postType}'` : ""}
       ORDER BY p.creation_date DESC
     `);
     return response[0];

@@ -12,8 +12,7 @@ app.use(express.json());
 
 app.use("/user", userRouter);
 app.use("/friendship", friendshipRouter);
-
-app.use("/posts", postsRouter);
+app.use("/post", postsRouter);
 
 const server = app.listen(3000, () => {
   if (server) {
