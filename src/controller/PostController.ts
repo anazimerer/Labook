@@ -1,19 +1,14 @@
 import { Request, Response } from "express";
 import PostBusiness from "../business/PostBusiness";
+import { PostInputDTO } from "../model/Post";
 
 export default class PostController {
   async createPost(req: Request, res: Response) {
-    const postBusiness = new PostBusiness();
+    const postBusiness: PostBusiness = new PostBusiness();
     try {
-      const { urlPhoto, description, creationDate, type } = req.body;
+      const postInputDTO: PostInputDTO = req.body;
       const token = req.headers.authorization as string;
-      await postBusiness.createPost(
-        token,
-        urlPhoto,
-        description,
-        creationDate,
-        type
-      );
+      await postBusiness.createPost(token, postInputDTO);
 
       res.status(200).send({
         message: "Post criado!",
