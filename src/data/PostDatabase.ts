@@ -71,7 +71,7 @@ export default class PostsDatabase extends BaseDatabase {
       .andWhere(type ? { type } : {})
       .orderBy("p.creation_date", "desc")
       .limit(PostsDatabase.LIMIT)
-      .offset(PostsDatabase.LIMIT * (page - 1));
+      .offset(PostsDatabase.LIMIT * (page - 1) || 0);
     BaseDatabase.destroyConnection();
 
     const feed: PostAndUserNameOutputDTO[] = response.map((item: any) => {
