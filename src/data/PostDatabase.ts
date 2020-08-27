@@ -72,10 +72,9 @@ export default class PostsDatabase extends BaseDatabase {
         "p.type",
         "p.user_creator_id",
         "u.name",
-        knex("post_like")
-          .count("*")
-          .where("post_id", knex.ref("p.post_id"))
-          .as("likesCount")
+        knex.raw(
+          `(SELECT COUNT(1) FROM post_like l WHERE l.post_id = p.post_id) as likesCount`
+        )
       )
       .where({ "f.user_id": userId })
       .andWhere(type ? { type } : {})
