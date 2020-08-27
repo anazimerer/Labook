@@ -1,7 +1,7 @@
 import BaseDatabase from "./BaseDatabase";
-import { PostAndUserNameOutputDTO, Post } from "../model/Post";
+import { PostAndUserNameOutputDTO } from "../model/Post";
 import moment from "moment";
-moment.locale("PT-BR");
+
 export default class PostsDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_post";
   private static LIMIT = 5;
@@ -31,7 +31,8 @@ export default class PostsDatabase extends BaseDatabase {
       ${postType ? `AND p.type = '${postType}'` : ""}
       ORDER BY p.creation_date DESC
     `);
-    BaseDatabase.destroyConnection();
+
+    await BaseDatabase.destroyConnection();
 
     const feed: PostAndUserNameOutputDTO[] = response[0].map((item: any) => {
       const post: PostAndUserNameOutputDTO = {
@@ -72,7 +73,8 @@ export default class PostsDatabase extends BaseDatabase {
       .orderBy("p.creation_date", "desc")
       .limit(PostsDatabase.LIMIT)
       .offset(PostsDatabase.LIMIT * (page - 1) || 0);
-    BaseDatabase.destroyConnection();
+
+    await BaseDatabase.destroyConnection();
 
     const feed: PostAndUserNameOutputDTO[] = response.map((item: any) => {
       const post: PostAndUserNameOutputDTO = {
@@ -106,7 +108,8 @@ export default class PostsDatabase extends BaseDatabase {
       )
       .where({ type })
       .orderBy("creation_date", "desc");
-    BaseDatabase.destroyConnection();
+
+    await BaseDatabase.destroyConnection();
 
     const feed: PostAndUserNameOutputDTO[] = response.map((item: any) => {
       const post: PostAndUserNameOutputDTO = {
