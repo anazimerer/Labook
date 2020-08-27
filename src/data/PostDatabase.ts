@@ -84,9 +84,9 @@ export default class PostsDatabase extends BaseDatabase {
         userId: item.user_creator_id,
         userName: item.name,
       };
-
       return post;
     });
+
     return feed;
   }
 
