@@ -21,7 +21,8 @@ export default class PostsController {
     try {
       const response = await postsBusiness.getFeedByType(
         req.headers.authorization as string,
-        req.params.type as string
+        Number(req.params.page),
+        req.params.type
       );
 
       res.status(200).send({ posts: response });

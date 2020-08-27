@@ -19,11 +19,15 @@ export class PostsBusiness {
     return response;
   }
 
-  public async getFeedByType(token: string, type?: string): Promise<any[]> {
+  public async getFeedByType(
+    token: string,
+    page: number,
+    type?: string
+  ): Promise<any[]> {
     Authenticator.getData(token);
 
     const postDatabase = new PostsDatabase();
-    const response = await postDatabase.getFeedByType(type as string);
+    const response = await postDatabase.getFeedByType(page, type as string);
 
     return response;
   }

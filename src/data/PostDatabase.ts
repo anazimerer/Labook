@@ -96,6 +96,7 @@ export default class PostsDatabase extends BaseDatabase {
   }
 
   public async getFeedByType(
+    page: number,
     type: string
   ): Promise<PostAndUserNameOutputDTO[]> {
     const response = await this.getConnection()({ p: PostsDatabase.TABLE_NAME })
@@ -109,8 +110,10 @@ export default class PostsDatabase extends BaseDatabase {
         "u.id as user_creator_id",
         "u.name"
       )
-      .where({ type })
-      .orderBy("creation_date", "desc");
+      .where(type ? { type } : {})
+      .orderBy("creation_date", "desc")
+      .limit(PostsDatabase.LIMIT)
+      .offset(PostsDatabase.LIMIT * (page - 1) || 0);
 
     await BaseDatabase.destroyConnection();
 
