@@ -23,7 +23,8 @@ export default class PostsDatabase extends BaseDatabase {
           p.creation_date,
           p.type,
           p.user_creator_id,
-          u.name 
+          u.name,
+          (SELECT COUNT(1) FROM post_like l WHERE l.post_id = p.post_id) as likesCount
       FROM 
           labook_post p JOIN labook_user u ON p.user_creator_id = u.id
           JOIN labook_user_relationship f ON f.friend_id = u.id
@@ -32,7 +33,7 @@ export default class PostsDatabase extends BaseDatabase {
       ${postType ? `AND p.type = '${postType}'` : ""}
       ORDER BY p.creation_date DESC
       LIMIT ${PostsDatabase.LIMIT}
-      OFFSET ${PostsDatabase.LIMIT * (page - 1) || 0}
+      OFFSET ${page > 0 ? PostsDatabase.LIMIT * (page - 1) : 0}
     `);
 
     await BaseDatabase.destroyConnection();
@@ -58,7 +59,8 @@ export default class PostsDatabase extends BaseDatabase {
     page: number,
     type?: string
   ): Promise<PostAndUserNameOutputDTO[]> {
-    const response = await this.getConnection()
+    const knex = this.getConnection();
+    const response = await knex
       .from({ p: PostsDatabase.TABLE_NAME })
       .join({ u: "labook_user" }, { "p.user_creator_id": "u.id" })
       .join({ f: "labook_user_relationship" }, { "f.friend_id": "u.id" })
@@ -69,13 +71,17 @@ export default class PostsDatabase extends BaseDatabase {
         "p.creation_date",
         "p.type",
         "p.user_creator_id",
-        "u.name"
+        "u.name",
+        knex("post_like")
+          .count("*")
+          .where("post_id", knex.ref("p.post_id"))
+          .as("likesCount")
       )
       .where({ "f.user_id": userId })
       .andWhere(type ? { type } : {})
       .orderBy("p.creation_date", "desc")
       .limit(PostsDatabase.LIMIT)
-      .offset(PostsDatabase.LIMIT * (page - 1) || 0);
+      .offset(page > 0 ? PostsDatabase.LIMIT * (page - 1) : 0);
 
     await BaseDatabase.destroyConnection();
 
