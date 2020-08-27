@@ -2,12 +2,17 @@ import Authenticator from "../services/Authenticator";
 import PostsDatabase from "../data/PostDatabase";
 
 export class PostsBusiness {
-  public async getFeedByUserId(token: string, type?: string): Promise<any[]> {
+  public async getFeedByUserId(
+    token: string,
+    page: number,
+    type?: string
+  ): Promise<any[]> {
     const authenticationData = Authenticator.getData(token);
 
     const postDatabase = new PostsDatabase();
     const response = await postDatabase.getFeedByUserId2(
       authenticationData.id,
+      page,
       type
     );
 

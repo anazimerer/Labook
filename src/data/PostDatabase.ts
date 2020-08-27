@@ -4,6 +4,7 @@ import moment from "moment";
 moment.locale("PT-BR");
 export default class PostsDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_post";
+  private static LIMIT = 5;
 
   public async getFeedByUserId(
     userId: string,
@@ -50,6 +51,7 @@ export default class PostsDatabase extends BaseDatabase {
 
   public async getFeedByUserId2(
     userId: string,
+    page: number,
     type?: string
   ): Promise<PostAndUserNameOutputDTO[]> {
     const response = await this.getConnection()
@@ -67,7 +69,9 @@ export default class PostsDatabase extends BaseDatabase {
       )
       .where({ "f.user_id": userId })
       .andWhere(type ? { type } : {})
-      .orderBy("p.creation_date", "desc");
+      .orderBy("p.creation_date", "desc")
+      .limit(PostsDatabase.LIMIT)
+      .offset(PostsDatabase.LIMIT * (page - 1));
     BaseDatabase.destroyConnection();
 
     const feed: PostAndUserNameOutputDTO[] = response.map((item: any) => {

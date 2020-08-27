@@ -7,6 +7,7 @@ export default class PostsController {
     try {
       const response = await postsBusiness.getFeedByUserId(
         req.headers.authorization as string,
+        Number(req.query.page),
         req.query.type as string
       );
 
