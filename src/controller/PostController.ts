@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import PostBusiness from "../business/PostBusiness";
 import { PostInputDTO } from "../model/Post";
+import { CommentInputDTO } from "../model/Comment";
 
 export default class PostController {
   async createPost(req: Request, res: Response) {
@@ -41,6 +42,49 @@ export default class PostController {
       );
 
       res.status(200).send({ posts: response });
+    } catch (e) {
+      res.status(400).send({ message: e.sqlMessage || e.message });
+    }
+  }
+
+  async likePost(req: Request, res: Response) {
+    const postBusiness: PostBusiness = new PostBusiness();
+    try {
+      await postBusiness.likePost(
+        req.headers.authorization as string,
+        req.params.postId
+      );
+      res.status(200).send({ message: "Like!" });
+    } catch (e) {
+      res.status(400).send({ message: e.sqlMessage || e.message });
+    }
+  }
+
+  async unlikePost(req: Request, res: Response) {
+    const postBusiness: PostBusiness = new PostBusiness();
+    try {
+      await postBusiness.unlikePost(
+        req.headers.authorization as string,
+        req.params.postId
+      );
+      res.status(200).send({ message: "No Like!" });
+    } catch (e) {
+      res.status(400).send({ message: e.sqlMessage || e.message });
+    }
+  }
+
+  async createComment(req: Request, res: Response) {
+    const postBusiness: PostBusiness = new PostBusiness();
+    try {
+      const input: CommentInputDTO = {
+        postId: req.params.postId,
+        text: req.body.text,
+      };
+      await postBusiness.createComment(
+        req.headers.authorization as string,
+        input
+      );
+      res.status(200).send({ message: "Comment!" });
     } catch (e) {
       res.status(400).send({ message: e.sqlMessage || e.message });
     }
