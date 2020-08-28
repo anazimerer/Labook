@@ -27,54 +27,6 @@ export default class PostsDatabase extends BaseDatabase {
     await BaseDatabase.destroyConnection();
   }
 
-  // public async getFeedByUserId(
-  //   userId: string,
-  //   page: number,
-  //   type?: string
-  // ): Promise<PostAndUserNameOutputDTO[]> {
-  //   const postType =
-  //     type?.toUpperCase() === "NORMAL" || type?.toUpperCase() === "EVENT"
-  //       ? type
-  //       : undefined;
-  //   const response = await this.getConnection().raw(`
-  //     SELECT
-  //         p.post_id,
-  //         p.url_photo,
-  //         p.description,
-  //         p.creation_date,
-  //         p.type,
-  //         p.user_creator_id,
-  //         u.name,
-  //         (SELECT COUNT(1) FROM post_like l WHERE l.post_id = p.post_id) as likesCount
-  //     FROM
-  //         labook_post p JOIN labook_user u ON p.user_creator_id = u.id
-  //         JOIN labook_user_relationship f ON f.friend_id = u.id
-  //     WHERE
-  //         f.user_id = '${userId}'
-  //     ${postType ? `AND p.type = '${postType}'` : ""}
-  //     ORDER BY p.creation_date DESC
-  //     LIMIT ${PostsDatabase.LIMIT}
-  //     OFFSET ${page > 0 ? PostsDatabase.LIMIT * (page - 1) : 0}
-  //   `);
-
-  //   await BaseDatabase.destroyConnection();
-
-  //   const feed: PostAndUserNameOutputDTO[] = response[0].map((item: any) => {
-  //     const post: PostAndUserNameOutputDTO = {
-  //       postId: item.post_id,
-  //       urlPhoto: item.url_photo,
-  //       description: item.description,
-  //       creationDate: moment(item.creation_date).format("DD/MM/YYYY HH:mm"),
-  //       type: item.type,
-  //       userId: item.user_creator_id,
-  //       userName: item.name,
-  //     };
-  //     return post;
-  //   });
-
-  //   return feed;
-  // }
-
   public async getFeedByUserId2(
     userId: string,
     page: number,
@@ -99,7 +51,7 @@ export default class PostsDatabase extends BaseDatabase {
         "p.user_creator_id",
         "u.name",
         knex("post_like")
-          .count("*")
+          .count()
           .where("post_id", knex.ref("p.post_id"))
           .as("likesCount"),
         knex.raw(`(SELECT COUNT(1) 
