@@ -1,6 +1,12 @@
-# labook-template
+## Projeto Labook2
 
-Repositório do projeto Labook
+### Ana Irala
+
+### Ana Zimerer
+
+### Renan Takeshi
+
+---
 
 ```sql
 CREATE TABLE labook_user(
@@ -11,6 +17,8 @@ CREATE TABLE labook_user(
 );
 ```
 
+---
+
 ```sql
 CREATE TABLE labook_user_relationship(
     user_id VARCHAR(255),
@@ -20,6 +28,8 @@ CREATE TABLE labook_user_relationship(
         FOREIGN KEY (friend_id) REFERENCES labook_user(id)
 );
 ```
+
+---
 
 ```sql
 CREATE TABLE labook_post(
@@ -33,6 +43,8 @@ CREATE TABLE labook_post(
 );
 ```
 
+---
+
 ```sql
 CREATE TABLE post_like(
 	post_id VARCHAR(255),
@@ -42,6 +54,8 @@ CREATE TABLE post_like(
     	FOREIGN KEY (user_id) REFERENCES labook_user(id)
 );
 ```
+
+---
 
 ```sql
 CREATE TABLE post_comment(
