@@ -3,9 +3,11 @@ export class Post {
     private postId: string,
     private urlPhoto: string,
     private description: string,
-    private creationDate: string,
-    private type: string,
-    private postCreatorId: string
+
+    private creationDate: Date,
+    private type: PostType,
+    private userId: string
+
   ) {}
 
   getPostId() {
@@ -23,44 +25,59 @@ export class Post {
   getType() {
     return this.type;
   }
-  getPostCreatorId() {
-    return this.postCreatorId;
+
+  getUserId() {
+    return this.userId;
   }
 
-  setPostId(postId: string) {
+  setId(postId: string) {
     this.postId = postId;
   }
-  setUrlPhoto(urlPhoto: string) {
+  setUtlPhoto(urlPhoto: string) {
     this.urlPhoto = urlPhoto;
   }
   setDescription(description: string) {
     this.description = description;
   }
-  setCreationDate(creationDate: string) {
+
+  setCreationDate(creationDate: Date) {
     this.creationDate = creationDate;
   }
-
-  setType(type: string) {
+  setType(type: PostType) {
     this.type = type;
+  }
+  setUserId(userId: string) {
+    this.userId = userId;
   }
 
   static toPostModel(post: any): Post {
     return new Post(
-      post.postId,
-      post.urlPhoto,
+      post.post_id,
+      post.url_photo,
       post.description,
-      post.creationDate,
+      post.creation_date,
       post.type,
-      post.userCreatorId
+      post.user_creator_id
+
     );
   }
 }
 
-export interface PostInputDTO {
+
+export interface PostAndUserNameOutputDTO {
+
   postId: string;
   urlPhoto: string;
   description: string;
   creationDate: string;
-  type: string;
-  userCreatorId: string;
+
+  type: PostType;
+  userId: string;
+  userName: string;
+}
+
+export enum PostType {
+  NORMAL = "NORMAL",
+  EVENT = "EVENT",
+
 }

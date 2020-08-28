@@ -32,4 +32,13 @@ user_creator_id VARCHAR(255) NOT NULL,
 FOREIGN KEY (user_creator_id) REFERENCES labook_user(id)
 );
 ```
-teste
+
+```sql
+CREATE TABLE post_like(
+	post_id VARCHAR(255),
+    user_id VARCHAR(255),
+    PRIMARY KEY (post_id,user_id),
+    FOREIGN KEY (post_id) REFERENCES labook_post(post_id),
+	FOREIGN KEY (user_id) REFERENCES labook_user(id)
+);
+```
