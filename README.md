@@ -47,7 +47,7 @@ CREATE TABLE labook_post(
 
 ```sql
 CREATE TABLE post_like(
-	post_id VARCHAR(255),
+    post_id VARCHAR(255),
     user_id VARCHAR(255),
         PRIMARY KEY (post_id,user_id),
         FOREIGN KEY (post_id) REFERENCES labook_post(post_id),
@@ -59,12 +59,12 @@ CREATE TABLE post_like(
 
 ```sql
 CREATE TABLE post_comment(
-	comment_id VARCHAR(255) PRIMARY KEY,
-	post_id VARCHAR(255) NOT NULL,
+    comment_id VARCHAR(255) PRIMARY KEY,
+    post_id VARCHAR(255) NOT NULL,
     user_id VARCHAR(255) NOT NULL,
     creation_date TIMESTAMP DEFAULT (current_timestamp),
     text TEXT NOT NULL,
         FOREIGN KEY (post_id) REFERENCES labook_post(post_id),
-	    FOREIGN KEY (user_id) REFERENCES labook_user(id)
+	FOREIGN KEY (user_id) REFERENCES labook_user(id)
 );
 ```
