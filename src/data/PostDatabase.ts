@@ -59,6 +59,11 @@ export default class PostsDatabase extends BaseDatabase {
     page: number,
     type?: string
   ): Promise<PostAndUserNameOutputDTO[]> {
+    const whereType =
+      type?.toUpperCase() === "NORMAL" || type?.toUpperCase() === "EVENT"
+        ? { type }
+        : {};
+
     const knex = this.getConnection();
     const response = await knex
       .from({ p: PostsDatabase.TABLE_NAME })
@@ -78,7 +83,7 @@ export default class PostsDatabase extends BaseDatabase {
           .as("likesCount")
       )
       .where({ "f.user_id": userId })
-      .andWhere(type ? { type } : {})
+      .andWhere(whereType)
       .orderBy("p.creation_date", "desc")
       .limit(PostsDatabase.LIMIT)
       .offset(page > 0 ? PostsDatabase.LIMIT * (page - 1) : 0);
