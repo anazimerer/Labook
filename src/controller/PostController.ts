@@ -63,11 +63,17 @@ export default class PostController {
   async unlikePost(req: Request, res: Response) {
     const postBusiness: PostBusiness = new PostBusiness();
     try {
-      await postBusiness.unlikePost(
+      const sucess = await postBusiness.unlikePost(
         req.headers.authorization as string,
         req.params.postId
       );
-      res.status(200).send({ message: "No Like!" });
+      if (sucess) {
+        res.status(200).send({ message: "Unlike!" });
+      } else {
+        res
+          .status(422)
+          .send({ message: "Para tirar o like é necessário ter um like" });
+      }
     } catch (e) {
       res.status(400).send({ message: e.sqlMessage || e.message });
     }

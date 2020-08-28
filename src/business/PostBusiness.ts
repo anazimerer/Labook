@@ -12,6 +12,18 @@ export default class PostBusiness {
     const postId = new IdGenerator().generateId();
     const userAuthentication = Authenticator.getData(token);
 
+    if (!input.urlPhoto) {
+      throw new Error("Url da foto é obrigatória");
+    }
+
+    if (
+      input.type &&
+      input.type.toUpperCase() !== "NORMAL" &&
+      input.type.toUpperCase() !== "EVENT"
+    ) {
+      input.type = "NORMAL";
+    }
+
     await postDatabase.createPost(
       postId,
       input.urlPhoto,
@@ -41,7 +53,7 @@ export default class PostBusiness {
   public async getFeedByType(
     token: string,
     page: number,
-    type?: string
+    type: string
   ): Promise<any[]> {
     Authenticator.getData(token);
 
@@ -57,16 +69,20 @@ export default class PostBusiness {
     await new LikeDatabase().likePost(postId, userId);
   }
 
-  public async unlikePost(token: string, postId: string): Promise<void> {
+  public async unlikePost(token: string, postId: string): Promise<number> {
     const userId = Authenticator.getData(token).id;
 
-    await new LikeDatabase().unlikePost(postId, userId);
+    return new LikeDatabase().unlikePost(postId, userId);
   }
 
   public async createComment(
     token: string,
     input: CommentInputDTO
   ): Promise<void> {
+    if (!input.text) {
+      throw new Error("Seja mais criativo!");
+    }
+
     const userId = Authenticator.getData(token).id;
     const commentId = new IdGenerator().generateId();
 

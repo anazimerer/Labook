@@ -136,6 +136,10 @@ export default class PostsDatabase extends BaseDatabase {
     page: number,
     type: string
   ): Promise<PostAndUserNameOutputDTO[]> {
+    const whereType =
+      type.toUpperCase() === "NORMAL" || type?.toUpperCase() === "EVENT"
+        ? { type }
+        : {};
     const knex = this.getConnection();
     const response = await knex
       .from({ p: PostsDatabase.TABLE_NAME })
@@ -156,7 +160,7 @@ export default class PostsDatabase extends BaseDatabase {
                      FROM post_comment c 
                      WHERE c.post_id = p.post_id) AS commentsCount`)
       )
-      .where(type ? { type } : {})
+      .where(whereType)
       .orderBy("creation_date", "desc")
       .limit(PostsDatabase.LIMIT)
       .offset(PostsDatabase.LIMIT * (page - 1) || 0);

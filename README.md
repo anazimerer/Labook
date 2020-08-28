@@ -24,7 +24,7 @@ CREATE TABLE labook_user_relationship(
 ```sql
 CREATE TABLE labook_post(
     post_id VARCHAR(255) PRIMARY KEY,
-    url_photo VARCHAR(255),
+    url_photo VARCHAR(255) NOT NULL,
     description TEXT,
     creation_date TIMESTAMP DEFAULT (current_timestamp),
     type ENUM('NORMAL', 'EVENT') DEFAULT ('NORMAL'),
