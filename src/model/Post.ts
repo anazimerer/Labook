@@ -63,6 +63,14 @@ export class Post {
   }
 }
 
+export interface PostInputDTO {
+  postId: string;
+  urlPhoto: string;
+  description: string;
+  creationDate: string;
+  type: string;
+  userCreatorId: string;
+}
 
 export interface PostAndUserNameOutputDTO {
 
