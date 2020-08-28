@@ -3,9 +3,11 @@ export class Post {
     private postId: string,
     private urlPhoto: string,
     private description: string,
+
     private creationDate: Date,
     private type: PostType,
     private userId: string
+
   ) {}
 
   getPostId() {
@@ -23,6 +25,7 @@ export class Post {
   getType() {
     return this.type;
   }
+
   getUserId() {
     return this.userId;
   }
@@ -36,6 +39,7 @@ export class Post {
   setDescription(description: string) {
     this.description = description;
   }
+
   setCreationDate(creationDate: Date) {
     this.creationDate = creationDate;
   }
@@ -54,15 +58,19 @@ export class Post {
       post.creation_date,
       post.type,
       post.user_creator_id
+
     );
   }
 }
 
+
 export interface PostAndUserNameOutputDTO {
+
   postId: string;
   urlPhoto: string;
   description: string;
   creationDate: string;
+
   type: PostType;
   userId: string;
   userName: string;
@@ -71,4 +79,5 @@ export interface PostAndUserNameOutputDTO {
 export enum PostType {
   NORMAL = "NORMAL",
   EVENT = "EVENT",
+
 }

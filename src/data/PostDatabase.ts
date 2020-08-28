@@ -142,5 +142,6 @@ export default class PostsDatabase extends BaseDatabase {
       return post;
     });
     return feed;
+
   }
 }
