@@ -7,7 +7,6 @@ export class Post {
     private creationDate: Date,
     private type: PostType,
     private userId: string
-
   ) {}
 
   getPostId() {
@@ -58,7 +57,6 @@ export class Post {
       post.creation_date,
       post.type,
       post.user_creator_id
-
     );
   }
 }
@@ -73,7 +71,6 @@ export interface PostInputDTO {
 }
 
 export interface PostAndUserNameOutputDTO {
-
   postId: string;
   urlPhoto: string;
   description: string;
@@ -82,10 +79,12 @@ export interface PostAndUserNameOutputDTO {
   type: PostType;
   userId: string;
   userName: string;
+
+  likesCount: number;
+  commentsCount: number;
 }
 
 export enum PostType {
   NORMAL = "NORMAL",
   EVENT = "EVENT",
-
 }

@@ -2,12 +2,27 @@ import Authenticator from "../services/Authenticator";
 import IdGenerator from "../services/IdGenerator";
 import PostDatabase from "../data/PostDatabase";
 import { PostInputDTO } from "../model/Post";
+import { CommentInputDTO } from "../model/Comment";
+import LikeDatabase from "../data/LikeDatabase";
+import { CommentDatabase } from "../data/CommentDatabase";
 
 export default class PostBusiness {
   public async createPost(token: string, input: PostInputDTO): Promise<void> {
     const postDatabase = new PostDatabase();
     const postId = new IdGenerator().generateId();
     const userAuthentication = Authenticator.getData(token);
+
+    if (!input.urlPhoto) {
+      throw new Error("Url da foto é obrigatória");
+    }
+
+    if (
+      input.type &&
+      input.type.toUpperCase() !== "NORMAL" &&
+      input.type.toUpperCase() !== "EVENT"
+    ) {
+      input.type = "NORMAL";
+    }
 
     await postDatabase.createPost(
       postId,
@@ -38,7 +53,7 @@ export default class PostBusiness {
   public async getFeedByType(
     token: string,
     page: number,
-    type?: string
+    type: string
   ): Promise<any[]> {
     Authenticator.getData(token);
 
@@ -46,5 +61,36 @@ export default class PostBusiness {
     const response = await postDatabase.getFeedByType(page, type as string);
 
     return response;
+  }
+
+  public async likePost(token: string, postId: string): Promise<void> {
+    const userId = Authenticator.getData(token).id;
+
+    await new LikeDatabase().likePost(postId, userId);
+  }
+
+  public async unlikePost(token: string, postId: string): Promise<number> {
+    const userId = Authenticator.getData(token).id;
+
+    return new LikeDatabase().unlikePost(postId, userId);
+  }
+
+  public async createComment(
+    token: string,
+    input: CommentInputDTO
+  ): Promise<void> {
+    if (!input.text) {
+      throw new Error("Seja mais criativo!");
+    }
+
+    const userId = Authenticator.getData(token).id;
+    const commentId = new IdGenerator().generateId();
+
+    await new CommentDatabase().createComment(
+      commentId,
+      input.postId,
+      userId,
+      input.text
+    );
   }
 }
