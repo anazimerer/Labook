@@ -10,6 +10,8 @@
 <p>:heavy_check_mark: Criar post</p>
 <p>:heavy_check_mark: Visualizar feed </p>
 <p>:heavy_check_mark: Filtrar tipos específicos de post </p>
+<p>:heavy_check_mark: Curtir e descurtir posts </p>
+<p>:heavy_check_mark: Comentar posts </p>
 
 <h3> Algumas das tecnologias e ferramentas utilizadas:</h3> 
 <li> :heavy_minus_sign: Node </p>
