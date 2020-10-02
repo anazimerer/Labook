@@ -1,4 +1,30 @@
-## Projeto Labook2
+
+<h1 align="center"> Labook </h1>
+<p><b>Status: </b>concluído  :star2: </p>
+
+<p align="justify"> O Labook é uma api desenvolvida para simular os processos de uma rede social. Com ele podemos criar novos usuários, fazer logins, criar amizades, posts e muito mais!</p>
+
+<h3>Funcionalidades</h3>
+<p>:heavy_check_mark: Cadastrar </p>
+<p>:heavy_check_mark: Logar </p>
+<p>:heavy_check_mark: Criar post</p>
+<p>:heavy_check_mark: Visualizar feed </p>
+<p>:heavy_check_mark: Filtrar tipos específicos de post </p>
+
+<h3> Algumas das tecnologias e ferramentas utilizadas:</h3> 
+<li> :heavy_minus_sign: Node </p>
+<li> :heavy_minus_sign: Typescript </p>
+<li> :heavy_minus_sign: Arquitura MVC</p>
+<li> :heavy_minus_sign: MySQL (para construção do banco de dados)</p>
+<li> :heavy_minus_sign: Knex (para conexão com o banco de dados)</p>
+<li> :heavy_minus_sign: Express (para integração do código através do protocolo HTTP)</p>
+<li> :heavy_minus_sign: Dotenv (para acessar informações sensíveis por meio de variáveis de ambiente)</p>
+<li> :heavy_minus_sign: UUID (para geraração de id)</p>
+<li> :heavy_minus_sign: Bcryptjs (para criptografar senhas)</p>
+<li> :heavy_minus_sign: Jsonwebtoken (para gerar tokens de autenticação)</p>
+
+
+## Time: 
 
 ### Ana Irala
 
@@ -7,6 +33,8 @@
 ### Renan Takeshi
 
 ---
+
+## Modelagem:
 
 ```sql
 CREATE TABLE labook_user(
