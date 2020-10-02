@@ -14,16 +14,16 @@
 <p>:heavy_check_mark: Comentar posts </p>
 
 <h3> Algumas das tecnologias e ferramentas utilizadas:</h3> 
-<li> :heavy_minus_sign: Node </p>
-<li> :heavy_minus_sign: Typescript </p>
-<li> :heavy_minus_sign: Arquitura MVC</p>
-<li> :heavy_minus_sign: MySQL (para construção do banco de dados)</p>
-<li> :heavy_minus_sign: Knex (para conexão com o banco de dados)</p>
-<li> :heavy_minus_sign: Express (para integração do código através do protocolo HTTP)</p>
-<li> :heavy_minus_sign: Dotenv (para acessar informações sensíveis por meio de variáveis de ambiente)</p>
-<li> :heavy_minus_sign: UUID (para geraração de id)</p>
-<li> :heavy_minus_sign: Bcryptjs (para criptografar senhas)</p>
-<li> :heavy_minus_sign: Jsonwebtoken (para gerar tokens de autenticação)</p>
+<li> Node </p>
+<li> Typescript </p>
+<li> Arquitura MVC</p>
+<li> MySQL (para construção do banco de dados)</p>
+<li> Knex (para conexão com o banco de dados)</p>
+<li> Express (para integração do código através do protocolo HTTP)</p>
+<li> Dotenv (para acessar informações sensíveis por meio de variáveis de ambiente)</p>
+<li> UUID (para geraração de id)</p>
+<li> Bcryptjs (para criptografar senhas)</p>
+<li> Jsonwebtoken (para gerar tokens de autenticação)</p>
 
 
 ## Time: 
